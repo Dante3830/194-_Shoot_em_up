@@ -1,0 +1,124 @@
+[gd_scene load_steps=9 format=3 uid="uid://d0f3jr3qi0326"]
+
+[ext_resource type="Texture2D" uid="uid://ctjbby0ucki36" path="res://Assets/kenney_pixel-shmup/Ships/ship_0001.png" id="1_s70dt"]
+[ext_resource type="Script" path="res://Scripts/player.gd" id="1_yprdw"]
+[ext_resource type="Texture2D" uid="uid://dhvecxh7betls" path="res://Assets/kenney_pixel-shmup/Tilemap/tiles.png" id="3_6m1oe"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_j8tqr"]
+size = Vector2(31.5, 90)
+
+[sub_resource type="Animation" id="Animation_61hxu"]
+resource_name = "MuzzleFlash"
+length = 0.1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("SpriteMF1:visible")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.0001, 0.1),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 1,
+"values": [true, true, false]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("SpriteMF1:rotation")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [0.0, 0.349066]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_cddw4"]
+_data = {
+"MuzzleFlash": SubResource("Animation_61hxu")
+}
+
+[sub_resource type="Animation" id="Animation_cx1ae"]
+resource_name = "Muzzleflash2"
+length = 0.1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("SpriteMF2:visible")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [true, false]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("SpriteMF2:rotation")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [0.0, 0.349066]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_3v334"]
+_data = {
+"Muzzleflash2": SubResource("Animation_cx1ae")
+}
+
+[node name="Player" type="CharacterBody2D" groups=["Player"]]
+script = ExtResource("1_yprdw")
+
+[node name="SpritePlain" type="Sprite2D" parent="."]
+texture_filter = 1
+scale = Vector2(4, 4)
+texture = ExtResource("1_s70dt")
+
+[node name="PlainCollider1" type="CollisionShape2D" parent="."]
+position = Vector2(0.25, 0)
+shape = SubResource("RectangleShape2D_j8tqr")
+
+[node name="SpawnPos1" type="Marker2D" parent="."]
+position = Vector2(-32, -27)
+
+[node name="SpawnPos2" type="Marker2D" parent="."]
+position = Vector2(32, -27)
+
+[node name="ShootSpeed" type="Timer" parent="."]
+wait_time = 0.1
+one_shot = true
+
+[node name="SpriteMF1" type="Sprite2D" parent="."]
+visible = false
+texture_filter = 1
+position = Vector2(-32, -27)
+texture = ExtResource("3_6m1oe")
+region_enabled = true
+region_rect = Rect2(84.9804, -0.551119, 16.5926, 16.8889)
+
+[node name="SpriteMF2" type="Sprite2D" parent="."]
+visible = false
+texture_filter = 1
+position = Vector2(33, -27)
+texture = ExtResource("3_6m1oe")
+region_enabled = true
+region_rect = Rect2(84.9804, -0.551119, 16.5926, 16.8889)
+
+[node name="Muzzleflash1" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_cddw4")
+}
+
+[node name="Muzzleflash2" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_3v334")
+}
+
+[connection signal="timeout" from="ShootSpeed" to="." method="_on_shoot_speed_timeout"]

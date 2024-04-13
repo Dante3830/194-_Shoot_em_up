@@ -1,0 +1,26 @@
+[gd_scene load_steps=4 format=3 uid="uid://ccyfg1ja2fesk"]
+
+[ext_resource type="Script" path="res://Scripts/bossBullet.gd" id="1_i23pl"]
+[ext_resource type="Texture2D" uid="uid://dbu764by70ehg" path="res://Assets/kenney_pixel-shmup/Tiles/tile_0000.png" id="1_vil0c"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_go2vs"]
+size = Vector2(24, 64)
+
+[node name="BossBullet" type="Area2D"]
+script = ExtResource("1_i23pl")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture_filter = 1
+rotation = 3.14159
+scale = Vector2(4, 4)
+texture = ExtResource("1_vil0c")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("RectangleShape2D_go2vs")
+
+[node name="Despawner" type="Timer" parent="."]
+wait_time = 3.0
+autostart = true
+
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]
+[connection signal="timeout" from="Despawner" to="." method="_on_despawner_timeout"]

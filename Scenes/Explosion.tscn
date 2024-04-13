@@ -1,0 +1,34 @@
+[gd_scene load_steps=5 format=3 uid="uid://dri05upmeab6y"]
+
+[ext_resource type="Texture2D" uid="uid://d2xilo558n8qu" path="res://Assets/pixelCircle.png" id="1_41xcy"]
+[ext_resource type="Script" path="res://Scripts/explosion.gd" id="2_elqk7"]
+
+[sub_resource type="Curve" id="Curve_n2x8a"]
+_data = [Vector2(0.0251397, 0.496675), 0.0, 0.0, 0, 0, Vector2(0.857542, 0.110689), 0.0, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="Gradient" id="Gradient_0a2p5"]
+offsets = PackedFloat32Array(0, 0.54, 1)
+colors = PackedColorArray(1, 0.9, 0, 1, 0.891159, 0.336566, 0, 1, 1, 0, 0, 1)
+
+[node name="Explosion" type="CPUParticles2D"]
+scale = Vector2(0.2, 0.2)
+emitting = false
+amount = 200
+one_shot = true
+speed_scale = 3.0
+explosiveness = 0.8
+local_coords = true
+texture = ExtResource("1_41xcy")
+emission_shape = 1
+emission_sphere_radius = 0.01
+direction = Vector2(0, 0)
+spread = 180.0
+gravity = Vector2(0, 0)
+initial_velocity_min = 500.0
+initial_velocity_max = 500.0
+scale_amount_min = 0.1
+scale_amount_max = 0.5
+scale_amount_curve = SubResource("Curve_n2x8a")
+color_ramp = SubResource("Gradient_0a2p5")
+script = ExtResource("2_elqk7")

@@ -1,0 +1,54 @@
+[gd_scene load_steps=6 format=3 uid="uid://blfb0e7cq4urt"]
+
+[ext_resource type="Script" path="res://Scripts/enemy.gd" id="1_0ok6i"]
+[ext_resource type="Texture2D" uid="uid://b66cpkqh3ignx" path="res://Assets/kenney_pixel-shmup/Ships/ship_0000.png" id="1_qhedh"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_dbajh"]
+size = Vector2(29, 80)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_cw81y"]
+size = Vector2(110, 46)
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_3ytu1"]
+radius = 1130.66
+
+[node name="Enemy" type="CharacterBody2D"]
+script = ExtResource("1_0ok6i")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture_filter = 1
+rotation = 3.14159
+scale = Vector2(4, 4)
+texture = ExtResource("1_qhedh")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(0.5, 2)
+shape = SubResource("RectangleShape2D_dbajh")
+
+[node name="CollisionShape2D2" type="CollisionShape2D" parent="."]
+position = Vector2(0, -1)
+shape = SubResource("RectangleShape2D_cw81y")
+
+[node name="Detection" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Detection"]
+shape = SubResource("CircleShape2D_3ytu1")
+
+[node name="SpawnPos1" type="Marker2D" parent="."]
+position = Vector2(-45, 19)
+
+[node name="SpawnPos2" type="Marker2D" parent="."]
+position = Vector2(-23, 24)
+
+[node name="SpawnPos3" type="Marker2D" parent="."]
+position = Vector2(24, 24)
+
+[node name="SpawnPos4" type="Marker2D" parent="."]
+position = Vector2(45, 16)
+
+[node name="ShootSpeed" type="Timer" parent="."]
+wait_time = 0.5
+autostart = true
+
+[connection signal="body_entered" from="Detection" to="." method="_on_detection_body_entered"]
+[connection signal="timeout" from="ShootSpeed" to="." method="_on_shoot_speed_timeout"]
